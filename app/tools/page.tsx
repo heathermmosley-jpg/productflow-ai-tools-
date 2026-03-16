@@ -1,113 +1,82 @@
-"use client";
-import { useState } from 'react';
-import { Zap, Target, DollarSign, Lightbulb, Loader2, Sparkles, ArrowRight } from 'lucide-react';
+import { 
+  Zap, PenTool, Globe, Target, Calendar, CheckSquare, 
+  BarChart, Wallet, Lightbulb, User, Search, TrendingUp, Sparkles 
+} from 'lucide-react';
+import Link from 'next/link';
 
-export default function SideHustleGenerator() {
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+const categories = [
+  {
+    title: "Business & Income",
+    tools: [
+      { name: "AI Side Hustle Generator", desc: "Turn skills into profit blueprints.", icon: <Zap />, color: "bg-blue-500" },
+      { name: "Digital Product Generator", desc: "Brainstorm high-margin digital goods.", icon: <PenTool />, color: "bg-indigo-500" },
+      { name: "Business Name Generator", desc: "Find the perfect brand identity.", icon: <Globe />, color: "bg-cyan-500" }
+    ]
+  },
+  {
+    title: "Focus & Productivity",
+    tools: [
+      { name: "Focus Planner", desc: "Remove distractions, get more done.", icon: <Target />, color: "bg-emerald-500" },
+      { name: "Daily Task Organizer", desc: "Smart prioritization for creators.", icon: <CheckSquare />, color: "bg-green-500" }
+    ]
+  },
+  {
+    title: "Financial Clarity",
+    tools: [
+      { name: "Financial Clarity Score", desc: "Analyze your current money health.", icon: <BarChart />, color: "bg-amber-500" },
+      { name: "Income Strategy Generator", desc: "Map out your path to $10k/mo.", icon: <Wallet />, color: "bg-orange-500" }
+    ]
+  },
+  {
+    title: "Idea Discovery",
+    tools: [
+      { name: "Ideas Gallery", desc: "Browse successful product blueprints.", icon: <Lightbulb />, color: "bg-purple-500" },
+      { name: "Trending Ideas", desc: "What's winning in the market right now.", icon: <TrendingUp />, color: "bg-pink-500" }
+    ]
+  }
+];
 
-  const generateIdea = () => {
-    setLoading(true);
-    // Simulating AI market analysis delay
-    setTimeout(() => {
-      setResult({
-        title: "AI-Powered Real Estate Lead Gen",
-        niche: "Independent Realtors",
-        monetization: "$99/month Subscription",
-        steps: [
-          "Connect to local Zillow/MLS data via API.",
-          "Use AI to draft personalized seller outreach scripts.",
-          "Set up an automated dashboard for agents to track leads."
-        ]
-      });
-      setLoading(false);
-    }, 2000);
-  };
-
+export default function ToolsHub() {
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16 min-h-screen">
-      {/* Header Area */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-bold mb-4">
-          <Sparkles size={16} /> Beta Access: GPT-4o Powered
-        </div>
-        <h1 className="text-4xl font-black text-slate-900 mb-4 tracking-tight">AI Side Hustle Lab</h1>
-        <p className="text-slate-500 text-lg">Describe your skills, and we'll build your business blueprint.</p>
-      </div>
-
-      {/* Input Form */}
-      <div className="bg-white border-2 border-slate-100 p-8 rounded-[2.5rem] shadow-xl mb-12">
-        <div className="space-y-6">
-          <div>
-            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">What are you good at?</label>
+    <div className="bg-slate-50 min-h-screen pb-20">
+      {/* Search Header */}
+      <div className="bg-white border-b border-slate-200 pt-32 pb-16 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-black text-slate-900 mb-6 tracking-tight">Tools Hub</h1>
+          <div className="relative max-w-xl mx-auto">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
             <input 
               type="text" 
-              placeholder="e.g. Sales, Coding, Social Media..." 
-              className="w-full p-5 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-4 focus:ring-blue-100 outline-none transition-all text-lg"
+              placeholder="Search for a tool (e.g. 'Stripe', 'Planner')..." 
+              className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:ring-4 focus:ring-blue-100 outline-none transition-all shadow-sm"
             />
           </div>
-          <button 
-            onClick={generateIdea}
-            disabled={loading}
-            className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-xl hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all flex items-center justify-center gap-3 active:scale-95"
-          >
-            {loading ? (
-              <><Loader2 className="animate-spin" /> Analyzing Markets...</>
-            ) : (
-              <><Zap size={24} /> Generate My Blueprint</>
-            )}
-          </button>
         </div>
       </div>
 
-      {/* Results Display */}
-      {result && (
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-700">
-          <div className="bg-slate-900 text-white p-10 md:p-14 rounded-[3rem] shadow-2xl relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 opacity-10 rotate-12">
-              <Zap size={200} />
-            </div>
-            
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 text-blue-400 font-bold uppercase text-xs tracking-[0.2em] mb-6">
-                <Lightbulb size={18} /> The Opportunity
-              </div>
-              <h2 className="text-4xl font-bold mb-10">{result.title}</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 border-y border-white/10 py-10">
-                <div className="flex gap-5">
-                  <div className="p-4 bg-white/10 rounded-2xl h-fit shadow-inner"><Target className="text-blue-400" /></div>
-                  <div>
-                    <p className="text-slate-400 text-sm font-medium mb-1">Target Audience</p>
-                    <p className="text-xl font-bold">{result.niche}</p>
+      <div className="max-w-7xl mx-auto px-6 mt-12">
+        {categories.map((cat, idx) => (
+          <div key={idx} className="mb-16">
+            <h2 className="text-xl font-bold text-slate-800 mb-8 flex items-center gap-2">
+              <Sparkles size={18} className="text-blue-600" /> {cat.title}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {cat.tools.map((tool, tIdx) => (
+                <div key={tIdx} className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group">
+                  <div className={`w-12 h-12 ${tool.color} text-white rounded-xl flex items-center justify-center mb-6 shadow-lg`}>
+                    {tool.icon}
                   </div>
+                  <h3 className="text-lg font-bold text-slate-900 mb-2">{tool.name}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed mb-6">{tool.desc}</p>
+                  <Link href="/tools/generator" className="inline-flex items-center font-bold text-blue-600 text-sm group-hover:gap-2 transition-all">
+                    Try Tool <span className="opacity-0 group-hover:opacity-100 transition-all">→</span>
+                  </Link>
                 </div>
-                <div className="flex gap-5">
-                  <div className="p-4 bg-white/10 rounded-2xl h-fit shadow-inner"><DollarSign className="text-emerald-400" /></div>
-                  <div>
-                    <p className="text-slate-400 text-sm font-medium mb-1">Pricing Strategy</p>
-                    <p className="text-xl font-bold">{result.monetization}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-5">
-                <p className="font-bold text-blue-400 uppercase text-xs tracking-widest flex items-center gap-2">
-                  Launch Roadmap <ArrowRight size={14} />
-                </p>
-                {result.steps.map((step: string, i: number) => (
-                  <div key={i} className="flex gap-4 items-center bg-white/5 p-5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
-                    <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black shrink-0">
-                      {i + 1}
-                    </div>
-                    <p className="text-slate-200 text-lg">{step}</p>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
-}
+            }
