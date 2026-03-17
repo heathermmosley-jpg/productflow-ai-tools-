@@ -34,9 +34,10 @@ export default function RootLayout({
               <Link href="/tools" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">Tools</Link>
               <Link href="/pricing" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">Pricing</Link>
               <Link href="/help" className="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">Help</Link>
-              <Link href="/tools/generator" className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-800 transition-all active:scale-95">
-                Get Started
-              </Link>
+              <Link href="/help" className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-sm font-black hover:bg-slate-800 transition-all active:scale-95">
+  Start Here
+</Link>
+              
             </div>
           </div>
         </nav>
