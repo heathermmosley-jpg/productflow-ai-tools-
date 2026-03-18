@@ -66,7 +66,7 @@ export default function SmartGenerator() {
                 <div className="inline-flex items-center gap-2 bg-blue-600/20 text-blue-400 border border-blue-600/30 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-8"><Icons.Lock size={12} /> Premium Vault Detected</div>
                 <h3 className="text-4xl md:text-6xl font-black mb-8 leading-[0.9] tracking-tighter">We found 42 "High-Intent" names for {result.niche}.</h3>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                  <Link href="https://gumroad.com" className="bg-blue-600 px-12 py-6 rounded-2xl font-black text-2xl shadow-2xl hover:scale-105 transition-all">Unlock Secret Sauce ($19)</Link>
+                  <Link href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02"className="bg-blue-600 px-12 py-6 rounded-2xl font-black text-2xl shadow-2xl hover:scale-105 transition-all">Unlock Secret Sauce ($19)</Link>
                   <Link href="https://productflowai.com" className="bg-white text-slate-900 px-12 py-6 rounded-2xl font-black text-2xl hover:scale-105 transition-all">Go Elite ($79)</Link>
                 </div>
                 <button onClick={() => setResult(null)} className="mt-12 text-slate-500 font-bold uppercase text-xs tracking-widest">Start New Analysis</button>
