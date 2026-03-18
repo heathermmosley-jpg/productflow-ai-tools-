@@ -44,10 +44,22 @@ import Link from 'next/link';
               <h3 className="text-2xl font-black italic">Save Your Progress</h3>
               <p className="text-blue-100 text-sm font-medium">Get these results + 5 Free Tools waiting at ProductFlowAI.com in your inbox.</p>
             </div>
-            <div className="flex w-full md:w-auto gap-2">
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none" />
-              
-              <button onClick={handleSaveEmail} className="bg-slate-900 px-6 py-4 rounded-xl font-black hover:bg-slate-800 whitespace-nowrap">Get Results</button>
+            <div className="flex flex-col sm:flex-row gap-4">
+  <input 
+    type="email" 
+    value={email} 
+    onChange={(e) => setEmail(e.target.value)} 
+    placeholder="your@email.com" 
+    className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none" 
+  />
+  <button 
+    onClick={handleSaveEmail} 
+    className="bg-slate-900 px-6 py-4 rounded-xl font-black hover:bg-slate-800 whitespace-nowrap"
+  >
+    {isSaving ? "Sending..." : "Get Results"}
+  </button>
+</div>
+            
             </div>
           </div>
 
