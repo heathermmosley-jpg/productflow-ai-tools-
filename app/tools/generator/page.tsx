@@ -3,12 +3,12 @@ import { useState } from 'react';
 import * as Icons from 'lucide-react';
 import Link from 'next/link';
 
-export default function SmartGenerator() {
+//export default function SmartGenerator() {
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any>(null);
 
-  const runEngine = () => {
+  //const runEngine = () => {
     if (!userInput) return alert("Enter your niche!");
     setLoading(true);
     setTimeout(() => {
@@ -34,7 +34,7 @@ export default function SmartGenerator() {
           <p className="text-slate-500 text-lg mb-10 font-medium leading-relaxed">Enter your industry. Our AI analyzes SEO data to find brand names that actually convert traffic into customers.</p>
           <div className="relative">
             <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="e.g. Sustainable Shoes" className="w-full p-8 bg-slate-50 border-2 border-slate-100 rounded-[2.5rem] outline-none focus:border-blue-600 transition-all text-xl font-bold pr-40" />
-            <button onClick={runEngine} className="absolute right-3 top-3 bottom-3 px-8 bg-blue-600 text-white rounded-[2rem] font-black hover:bg-blue-700 shadow-lg shadow-blue-200">{loading ? <Icons.Loader2 className="animate-spin" /> : "Analyze"}</button>
+            //<button onClick={runEngine} className="absolute right-3 top-3 bottom-3 px-8 bg-blue-600 text-white rounded-[2rem] font-black hover:bg-blue-700 shadow-lg shadow-blue-200">{loading ? <Icons.Loader2 className="animate-spin" /> : "Analyze"}</button>
           </div>
         </div>
       ) : (
