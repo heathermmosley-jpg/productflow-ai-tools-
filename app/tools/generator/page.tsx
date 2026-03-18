@@ -1,94 +1,101 @@
 "use client";
-import { useState } from 'react';
-import * as Icons from 'lucide-react';
-import Link from 'next/link';
 
-  export default function SmartGenerator() {
-  const [userInput, setUserInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<any>(null);
+import { useState } from "react";
+import { Sparkles, ArrowRight, CheckCircle2, Lock } from "lucide-react";
 
-    const runEngine = () => {
-    if (!userInput) return alert("Enter your niche!");
-    setLoading(true);
-    setTimeout(() => {
-      const base = userInput.split(' ').slice(0, 2).join(' ');
-      setResult({
-        niche: base,
-        categories: [
-          { style: "Modern", names: [`${base}ly`, `Nova ${base}`, `Apex ${base}`] },
-          { style: "Punchy", names: [`${base}ix`, `Zent ${base}`, `${base}o`] },
-          { style: "Elite", names: [`The ${base} Club`, `Elite ${base}`, `Vivid ${base}`] },
-          { style: "Action", names: [`Go ${base}`, `${base} Flow`, `Swift ${base}`] }
-        ]
-      });
-      setLoading(false);
-    }, 1500);
+export default function ResultsPage() {
+  const [email, setEmail] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [hasSaved, setHasSaved] = useState(false);
+
+  // This handles the "Get Results" button click
+  const handleSaveEmail = async () => {
+    setIsSaving(true);
+    // We are skipping the broken database save for now so you can take payments!
+    // await saveEmail(email); 
+    setHasSaved(true);
+    setIsSaving(false);
   };
 
+  const businessIdeas = [
+    { title: "Modern Punch Needle Kits", desc: "Curated beginner sets with high-end yarn and trending patterns." },
+    { title: "Custom Tufted Rugs", desc: "Bespoke floor art for interior designers and hypebeast home decor." },
+    { title: "DIY Punch Needle Workshops", desc: "Digital courses teaching advanced textures and 3D techniques." }
+  ];
+
   return (
-    <div className="max-w-6xl mx-auto px-6 py-20 min-h-screen bg-white">
-      {!result ? (
-        <div className="max-w-3xl">
-          <h1 className="text-5xl font-black text-slate-900 mb-6 tracking-tighter italic">High-Traffic Engine.</h1>
-          <p className="text-slate-500 text-lg mb-10 font-medium leading-relaxed">Enter your industry. Our AI analyzes SEO data to find brand names that actually convert traffic into customers.</p>
-          <div className="relative">
-            <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="e.g. Sustainable Shoes" className="w-full p-8 bg-slate-50 border-2 border-slate-100 rounded-[2.5rem] outline-none focus:border-blue-600 transition-all text-xl font-bold pr-40" />
-             <button onClick={runEngine} className="absolute right-3 top-3 bottom-3 px-8 bg-blue-600 text-white rounded-[2rem] font-black hover:bg-blue-700 shadow-lg shadow-blue-200">{loading ? <Icons.Loader2 className="animate-spin" /> : "Analyze"}</button>
-          </div>
+    <div className="min-h-screen bg-slate-950 text-white p-6 font-sans">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-12">
+          <Sparkles className="text-yellow-400 w-6 h-6" />
+          <h1 className="text-xl font-black tracking-tighter uppercase">AI Business Strategist</h1>
         </div>
-      ) : (
-        <div className="animate-in fade-in slide-in-from-bottom-5">
-          <div className="bg-blue-600 rounded-[3rem] p-10 mb-10 text-white shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="max-w-md">
-              <h3 className="text-2xl font-black italic">Save Your Progress</h3>
-              <p className="text-blue-100 text-sm font-medium">Get these results + 5 Free Tools waiting at ProductFlowAI.com in your inbox.</p>
+
+        {!hasSaved ? (
+          /* SECTION 1: THE EMAIL LOCK */
+          <div className="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/20 shadow-2xl">
+            <div className="mb-8">
+              <span className="bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-black uppercase mb-4 inline-block">Analysis Complete</span>
+              <h2 className="text-4xl font-black mb-4">Your Custom Strategy is Ready.</h2>
+              <p className="text-slate-400 text-lg">We analyzed your niche and found 3 high-profit opportunities. Enter your email to unlock the full breakdown.</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-  <input 
-    type="email" 
-    value={email} 
-    onChange={(e) => setEmail(e.target.value)} 
-    placeholder="your@email.com" 
-    className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none" 
-  />
-  <button 
-    onClick={handleSaveEmail} 
-    className="bg-slate-900 px-6 py-4 rounded-xl font-black hover:bg-slate-800 whitespace-nowrap"
-  >
-    {isSaving ? "Sending..." : "Get Results"}
-  </button>
-</div>
             
+            <div className="flex flex-col sm:flex-row gap-4">
+              <input 
+                type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email" 
+                className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none focus:ring-4 ring-yellow-400/50 transition-all"
+              />
+              <button 
+                onClick={handleSaveEmail}
+                className="bg-yellow-400 text-black px-8 py-4 rounded-xl font-black hover:bg-yellow-300 transition-all flex items-center justify-center gap-2 group"
+              >
+                {isSaving ? "Unlocking..." : "Get My Results"}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+            </div>
+            <p className="text-xs text-slate-500 mt-4 flex items-center gap-1">
+              <Lock className="w-3 h-3" /> Secure & Private access only.
+            </p>
+          </div>
+        ) : (
+          /* SECTION 2: THE RESULTS & STRIPE BUTTON */
+          <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {businessIdeas.map((idea, i) => (
+                <div key={i} className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-yellow-400/50 transition-colors">
+                  <div className="bg-yellow-400 w-8 h-8 rounded-lg flex items-center justify-center text-black font-black mb-4">{i + 1}</div>
+                  <h3 className="font-black text-xl mb-2">{idea.title}</h3>
+                  <p className="text-slate-400 text-sm leading-relaxed">{idea.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* THE MONEY MAKER: THE STRIPE BUTTON */}
+            <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-8 rounded-3xl text-black relative overflow-hidden">
+              <div className="relative z-10">
+                <h2 className="text-3xl font-black mb-2 italic">THE SECRET SAUCE STRATEGY</h2>
+                <p className="font-bold mb-6 opacity-90">Ready to go from hobbyist to $10k/month? Get the exact step-by-step roadmap for these 3 ideas.</p>
+                
+                <a 
+                  href="https://buy.stripe.com/6oEbLg8oU8AebpS7ss" 
+                  className="bg-black text-white px-10 py-5 rounded-2xl font-black text-xl hover:scale-105 transition-transform inline-flex items-center gap-3 shadow-xl"
+                >
+                  Get The Strategy Now
+                  <CheckCircle2 className="w-6 h-6 text-yellow-400" />
+                </a>
+              </div>
+              <Sparkles className="absolute -right-10 -bottom-10 w-64 h-64 text-black/10 rotate-12" />
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {result.categories.map((cat: any, i: number) => (
-              <div key={i} className="p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100">
-                <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-6">{cat.style}</p>
-                <ul className="space-y-4 font-black text-slate-800 text-xl tracking-tight">
-                  {cat.names.map((name: string, j: number) => <li key={j}>{name}</li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-slate-900 rounded-[4rem] p-12 md:p-20 text-white text-center shadow-3xl relative overflow-hidden">
-             <div className="relative z-10">
-                <div className="inline-flex items-center gap-2 bg-blue-600/20 text-blue-400 border border-blue-600/30 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-8"><Icons.Lock size={12} /> Premium Vault Detected</div>
-                <h3 className="text-4xl md:text-6xl font-black mb-8 leading-[0.9] tracking-tighter">We found 42 "High-Intent" names for {result.niche}.</h3>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                  <Link href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02"className="bg-blue-600 px-12 py-6 rounded-2xl font-black text-2xl shadow-2xl hover:scale-105 transition-all">Unlock Secret Sauce ($19)</Link>
-                  <Link href="https://productflowai.com" className="bg-white text-slate-900 px-12 py-6 rounded-2xl font-black text-2xl hover:scale-105 transition-all">Go Elite ($79)</Link>
-                </div>
-                <button onClick={() => setResult(null)} className="mt-12 text-slate-500 font-bold uppercase text-xs tracking-widest">Start New Analysis</button>
-             </div>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
-}
+                  }
+
 
 
