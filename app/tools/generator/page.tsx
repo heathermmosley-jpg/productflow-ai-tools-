@@ -45,7 +45,7 @@ import Link from 'next/link';
               <p className="text-blue-100 text-sm font-medium">Get these results + 5 Free Tools waiting at ProductFlowAI.com in your inbox.</p>
             </div>
             <div className="flex w-full md:w-auto gap-2">
-              <input type="email" placeholder="your@email.com" className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none" />
+          //  <input type="email" placeholder="your@email.com" className="flex-1 p-4 rounded-xl text-slate-900 font-bold outline-none" />
               <button className="bg-slate-900 px-6 py-4 rounded-xl font-black hover:bg-slate-800 whitespace-nowrap">Get Results</button>
             </div>
           </div>
