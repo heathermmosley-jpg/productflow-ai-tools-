@@ -86,7 +86,7 @@ export default function App() {
                 
                 {/* THE UNSTOPPABLE LINK */}
                 <a 
-                  href="https://buy.stripe.com/6oEbLg8oU8AebpS7ss"
+                  href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02ss"
                   className="block w-full bg-yellow-400 text-black py-6 rounded-2xl font-black text-2xl uppercase hover:scale-105 transition-transform text-center no-underline"
                 >
                   Pay Now
