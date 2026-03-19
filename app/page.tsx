@@ -14,13 +14,13 @@ export default function App() {
         {/* HEADER */}
         <div className="flex items-center gap-2 mb-12">
           <Sparkles className="text-yellow-400 w-5 h-5" />
-          <h1 className="text-lg font-black uppercase italic">AI Strategist</h1>
+          <h1 className="text-lg font-black uppercase italic tracking-tighter">AI Strategist</h1>
         </div>
 
         {/* STEP 1: HOME */}
         {view === 'home' && (
           <div className="py-10 text-center">
-            <h2 className="text-5xl font-black mb-8 italic text-yellow-400">WELCOME TO THE PAD.</h2>
+            <h2 className="text-5xl font-black mb-8 italic text-yellow-400 leading-tight">WELCOME TO THE PAD.</h2>
             <button 
               onClick={() => setView('search')}
               className="w-full bg-white text-black py-6 rounded-3xl font-black text-2xl flex items-center justify-center gap-3 hover:bg-yellow-400"
@@ -60,7 +60,6 @@ export default function App() {
               <h2 className="text-3xl font-black uppercase italic mb-8">Results for "{niche || 'Niche'}"</h2>
             </div>
 
-            {/* STATUS CARDS */}
             <div className="space-y-3">
               <div className="p-5 bg-white/5 rounded-2xl border border-white/10 flex justify-between items-center opacity-70">
                 <div className="flex items-center gap-3">
@@ -78,23 +77,23 @@ export default function App() {
               </div>
             </div>
 
-            {/* THE STRIPE BOX - PURE HTML LINK */}
+            {/* THE STRIPE BOX - REDUCED FRICTION */}
             <div className="bg-white p-1 rounded-3xl mt-10 shadow-2xl">
               <div className="bg-slate-900 rounded-[22px] p-8 text-center border-4 border-yellow-400">
                 <h3 className="text-3xl font-black mb-2 text-white italic uppercase leading-none">Strategy Ready!</h3>
-                <p className="text-slate-400 mb-8 font-bold text-sm italic">Unlock the full $10k/month roadmap.</p>
+                <p className="text-slate-400 mb-8 font-bold text-sm italic tracking-tight">Access your custom $10k/month roadmap.</p>
                 
-                {/* 🚨 THE CORE FIX: NO JS, NO NEW TABS, JUST A CLEAN LINK 🚨 */}
+                {/* 🚨 THE CLEANEST LINK POSSIBLE - NO NEW TABS 🚨 */}
                 <a 
                   href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02"
-                  className="block w-full bg-yellow-400 text-black py-6 rounded-2xl font-black text-2xl uppercase hover:bg-yellow-300 transition-colors text-center"
+                  className="block w-full bg-yellow-400 text-black py-6 rounded-2xl font-black text-2xl uppercase hover:bg-yellow-300 transition-colors text-center no-underline"
                 >
                   Pay Now
                 </a>
                 
                 <div className="mt-6 flex items-center justify-center gap-2 opacity-30 text-white">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-widest italic">Verified Stripe Checkout</span>
+                  <span className="text-[10px] font-black uppercase tracking-widest italic">Verified Secure Checkout</span>
                 </div>
               </div>
             </div>
@@ -103,5 +102,5 @@ export default function App() {
       </div>
     </div>
   );
-        }
-
+      }
+                 
