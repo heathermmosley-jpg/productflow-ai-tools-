@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, ArrowRight, CheckCircle2, Wrench, Lightbulb, Hammer, ShieldCheck } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, Wrench, Lightbulb, Hammer } from "lucide-react";
 
 export default function App() {
   const [view, setView] = useState('home'); 
+  const [niche, setNiche] = useState("");
 
   return (
     <div className="min-h-screen bg-slate-950 text-white p-8 font-sans">
@@ -18,11 +19,11 @@ export default function App() {
 
         {/* STEP 1: HOME */}
         {view === 'home' && (
-          <div className="py-10">
+          <div className="py-10 text-center">
             <h2 className="text-5xl font-black mb-8 italic text-yellow-400 leading-tight">WELCOME TO THE PAD.</h2>
             <button 
               onClick={() => setView('search')}
-              className="w-full bg-white text-black py-6 rounded-2xl font-black text-2xl flex items-center justify-center gap-3 hover:bg-yellow-400 transition-colors"
+              className="w-full bg-white text-black py-6 rounded-3xl font-black text-2xl flex items-center justify-center gap-3 hover:bg-yellow-400 transition-all shadow-xl"
             >
               Start Here <ArrowRight />
             </button>
@@ -31,71 +32,76 @@ export default function App() {
 
         {/* STEP 2: SEARCH */}
         {view === 'search' && (
-          <div className="py-10">
-            <h2 className="text-3xl font-black mb-6 uppercase italic">What's the niche?</h2>
+          <div className="py-10 text-center">
+            <h2 className="text-3xl font-black mb-6 uppercase italic">The Niche?</h2>
             <input 
-              type="text" placeholder="e.g. Dogs" 
-              className="w-full p-6 rounded-2xl bg-slate-900 border-2 border-white/20 text-xl mb-6 outline-none"
+              type="text" 
+              value={niche}
+              onChange={(e) => setNiche(e.target.value)}
+              placeholder="e.g. Dogs" 
+              className="w-full p-6 rounded-2xl bg-slate-900 border-2 border-white/20 text-xl mb-6 outline-none text-white text-center"
             />
             <button 
               onClick={() => setView('toolhub')}
-              className="w-full bg-yellow-400 text-black py-6 rounded-2xl font-black text-xl uppercase"
+              className="w-full bg-yellow-400 text-black py-6 rounded-3xl font-black text-xl uppercase shadow-lg"
             >
-              Enter The Tool Hub
+              Analyze Niche
             </button>
           </div>
         )}
 
         {/* STEP 3: THE TOOL HUB (Trust Builders) */}
         {view === 'toolhub' && (
-          <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 bg-yellow-400/10 text-yellow-400 px-4 py-2 rounded-full font-black text-xs uppercase tracking-widest">
-              <Hammer className="w-3 h-3" /> System Status: Analysis Complete
+          <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="text-center">
+               <div className="inline-flex items-center gap-2 bg-yellow-400/10 text-yellow-400 px-4 py-2 rounded-full font-black text-xs uppercase mb-4">
+                <Hammer className="w-3 h-3" /> Tool Hub Active
+              </div>
+              <h2 className="text-3xl font-black uppercase italic mb-8">Results for "{niche || 'Niche'}"</h2>
             </div>
 
-            {/* TRUST BOXES (Non-Clickable Scanners) */}
-            <div className="grid grid-cols-1 gap-4">
-               <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex items-center gap-4 opacity-80">
-                <Wrench className="text-yellow-400" />
-                <div>
-                  <p className="font-black uppercase text-sm">Market Gap Finder</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase">Competitor Analysis: 100%</p>
+            {/* STATUS CARDS - These build the trust you mentioned! */}
+            <div className="space-y-3">
+              <div className="p-5 bg-white/5 rounded-2xl border border-white/10 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <Wrench className="text-yellow-400 w-5 h-5" />
+                  <span className="font-bold uppercase text-xs">Market Gap Finder</span>
                 </div>
+                <span className="text-yellow-400 font-black text-[10px]">SUCCESS</span>
               </div>
-              <div className="p-6 bg-white/5 rounded-2xl border border-white/10 flex items-center gap-4 opacity-80">
-                <Lightbulb className="text-yellow-400" />
-                <div>
-                  <p className="font-black uppercase text-sm">Profit Estimator</p>
-                  <p className="text-xs text-slate-500 font-bold uppercase">Projected Revenue: $10k/mo</p>
+              <div className="p-5 bg-white/5 rounded-2xl border border-white/10 flex justify-between items-center">
+                <div className="flex items-center gap-3">
+                  <Lightbulb className="text-yellow-400 w-5 h-5" />
+                  <span className="font-bold uppercase text-xs">Profit Estimator</span>
                 </div>
+                <span className="text-yellow-400 font-black text-[10px]">SUCCESS</span>
               </div>
             </div>
 
-            {/* THE PAYWALL */}
-            <div className="bg-white text-black p-10 rounded-3xl shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
-                <ShieldCheck className="w-20 h-20" />
+            {/* THE PAYWALL BOX */}
+            <div className="bg-yellow-400 p-1 rounded-3xl mt-10 shadow-2xl">
+              <div className="bg-slate-900 rounded-[22px] p-8 text-center">
+                <h3 className="text-3xl font-black mb-2 text-white italic uppercase">Strategy Ready!</h3>
+                <p className="text-slate-400 mb-8 font-bold text-sm italic">Access your full roadmap now.</p>
+                
+                {/* THE UNSTOPPABLE LINK */}
+                <a 
+                  href="https://buy.stripe.com/6oEbLg8oU8AebpS7ss"
+                  className="block w-full bg-yellow-400 text-black py-6 rounded-2xl font-black text-2xl uppercase hover:scale-105 transition-transform text-center no-underline"
+                >
+                  Pay Now
+                </a>
+                
+                <div className="mt-6 flex items-center justify-center gap-2 opacity-30 text-white">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span className="text-[10px] font-black uppercase tracking-widest">Verified Stripe Checkout</span>
+                </div>
               </div>
-              <h3 className="text-3xl font-black mb-2 uppercase italic">Success!</h3>
-              <p className="font-bold text-slate-500 mb-8 italic">Your "Dogs" roadmap is ready to be unlocked.</p>
-              
-              <a 
-                href="https://buy.stripe.com/6oEbLg8oU8AebpS7ss"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', backgroundColor: 'black', color: 'white', padding: '24px', borderRadius: '16px', fontWeight: '900', fontSize: '24px', textDecoration: 'none' }}
-              >
-                PAY NOW & ACCESS <CheckCircle2 style={{ color: '#facc15' }} />
-              </a>
-              
-              <p className="mt-6 text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                Verified Secure Stripe Checkout
-              </p>
             </div>
           </div>
         )}
       </div>
     </div>
   );
-}
-
+            }
+              
