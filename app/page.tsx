@@ -1,131 +1,88 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, ArrowRight, CheckCircle2, Wrench, Lightbulb, Hammer, HelpCircle, ShieldCheck } from "lucide-react";
+import { Sparkles, ArrowRight, Wrench, Lightbulb, Hammer, ShieldCheck, HelpCircle } from "lucide-react";
 
 export default function App() {
-  // Hardwired Steps: 1 (Home), 2 (Search), 3 (Tool Hub)
   const [step, setStep] = useState(1); 
   const [niche, setNiche] = useState("");
 
   return (
-    <div className="min-h-screen bg-black text-white p-6 font-sans">
-      <div className="max-w-xl mx-auto border-x-4 border-white/20 min-h-screen px-6 bg-zinc-950">
+    <div className="min-h-screen bg-black text-white p-4 font-sans uppercase">
+      <div className="max-w-md mx-auto border-4 border-white min-h-[90vh] p-6 bg-zinc-950 rounded-[40px] shadow-2xl">
         
-        {/* TOP NAVIGATION */}
-        <div className="flex justify-between items-center py-10 mb-12 border-b-4 border-white">
-          <div className="flex items-center gap-3">
-            <Sparkles className="text-yellow-400 w-8 h-8 animate-pulse" />
-            <h1 className="text-3xl font-black uppercase italic tracking-tighter text-white">THE PAD</h1>
+        {/* HEADER */}
+        <div className="flex justify-between items-center mb-10 border-b-4 border-white pb-4">
+          <div className="flex items-center gap-2">
+            <Sparkles className="text-yellow-400 w-6 h-6" />
+            <span className="text-xl font-black italic">THE PAD</span>
           </div>
-          <button className="bg-white text-black font-black text-sm uppercase px-6 py-2 rounded-full border-4 border-black shadow-[4px_4px_0px_white]">
-            <HelpCircle className="w-5 h-5 inline mr-1" /> HELP
-          </button>
+          <HelpCircle className="w-6 h-6 text-white" />
         </div>
 
-        {/* STEP 1: HOME SCREEN */}
+        {/* STEP 1: START */}
         {step === 1 && (
-          <div className="py-16 text-center animate-in fade-in zoom-in duration-500">
-            <h2 className="text-8xl font-black mb-12 italic text-yellow-400 leading-[0.85] uppercase tracking-tighter">
-              BUILD<br/>YOUR<br/>EMPIRE.
-            </h2>
-            <button 
-              onClick={() => setStep(2)}
-              className="w-full bg-white text-black py-10 rounded-full font-black text-4xl flex items-center justify-center gap-4 hover:bg-yellow-400 border-8 border-black shadow-[0_20px_50px_rgba(255,255,255,0.2)]"
-            >
-              START HERE <ArrowRight strokeWidth={5} />
-            </button>
+          <div className="py-10 text-center animate-in fade-in">
+            <h2 className="text-6xl font-black mb-12 italic text-yellow-400 leading-none">BUILD YOUR<br/>EMPIRE.</h2>
+            <button onClick={() => setStep(2)} className="w-full bg-white text-black py-8 rounded-full font-black text-3xl border-4 border-black shadow-[0_10px_0_#facc15]">START HERE</button>
           </div>
         )}
 
-        {/* STEP 2: SEARCH SCREEN */}
+        {/* STEP 2: SEARCH */}
         {step === 2 && (
-          <div className="py-10 text-center animate-in slide-in-from-right-10">
-            <h2 className="text-5xl font-black mb-10 uppercase italic text-white tracking-tighter underline decoration-yellow-400 decoration-8">CHOOSE NICHE</h2>
-            <input 
-              type="text" 
-              value={niche}
-              onChange={(e) => setNiche(e.target.value)}
-              placeholder="ENTER NICHE (E.G. DOGS)" 
-              className="w-full p-10 rounded-[40px] bg-black border-4 border-white text-3xl mb-12 outline-none text-white text-center font-black placeholder:text-zinc-800 focus:border-yellow-400 uppercase"
-            />
-            <button 
-              onClick={() => setStep(3)}
-              className="w-full bg-yellow-400 text-black py-8 rounded-full font-black text-3xl uppercase border-4 border-white hover:bg-white"
-            >
-              REVEAL TOOL HUB
-            </button>
+          <div className="py-10 text-center animate-in slide-in-from-right-5">
+            <h2 className="text-3xl font-black mb-8 italic text-white underline decoration-yellow-400">CHOOSE NICHE</h2>
+            <input type="text" value={niche} onChange={(e) => setNiche(e.target.value)} placeholder="E.G. DOGS" 
+              className="w-full p-6 rounded-3xl bg-black border-4 border-white text-2xl mb-8 outline-none text-white text-center font-black" />
+            <button onClick={() => setStep(3)} className="w-full bg-yellow-400 text-black py-6 rounded-full font-black text-2xl border-4 border-white">REVEAL TOOLS</button>
           </div>
         )}
 
-        {/* STEP 3: THE TOOL HUB */}
+        {/* STEP 3: TOOL HUB (HARD-LOCKED) */}
         {step === 3 && (
-          <div className="space-y-10 animate-in zoom-in-95 duration-500">
-            <div className="text-center">
-               <div className="inline-flex items-center gap-3 bg-white text-black px-8 py-3 rounded-full font-black text-lg uppercase mb-8 border-4 border-yellow-400 shadow-[6px_6px_0px_#facc15]">
-                <Hammer className="w-6 h-6 animate-bounce" /> TOOL HUB LIVE
+          <div className="space-y-6 animate-in zoom-in-95">
+            <div className="text-center mb-6">
+               <div className="inline-flex items-center gap-2 bg-white text-black px-4 py-2 rounded-full font-black text-xs border-2 border-yellow-400 mb-4">
+                <Hammer className="w-4 h-4 animate-bounce" /> TOOL HUB LIVE
               </div>
-              <h2 className="text-4xl font-black uppercase italic text-white leading-none">
-                AI ANALYSIS FOR:<br/>
-                <span className="text-yellow-400 text-5xl underline decoration-white decoration-4">{niche || 'DOGS'}</span>
-              </h2>
+              <h2 className="text-2xl font-black italic text-yellow-400">ANALYSIS: {niche || 'DOGS'}</h2>
             </div>
 
-            {/* HIGH-CONTRAST TOOL CARDS */}
-            <div className="grid grid-cols-1 gap-6">
-              <div className="p-8 bg-black rounded-[50px] border-4 border-white flex flex-col gap-6">
-                <div className="flex justify-between items-center">
-                  <Wrench className="text-yellow-400 w-16 h-16" />
-                  <span className="bg-white text-black px-6 py-2 rounded-full font-black text-sm uppercase border-2 border-black">LOCKED</span>
-                </div>
-                <div>
-                  <p className="font-black uppercase text-3xl text-white">Market Gap Finder</p>
-                  <p className="text-white font-bold text-base uppercase opacity-70 italic mt-2 text-left">Scanning Competition...</p>
-                </div>
+            {/* THE TOOLS */}
+            <div className="p-6 bg-black rounded-[30px] border-4 border-white flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <Wrench className="text-yellow-400 w-10 h-10" />
+                <span className="font-black text-lg">GAP FINDER</span>
               </div>
-              
-              <div className="p-8 bg-black rounded-[50px] border-4 border-white flex flex-col gap-6">
-                <div className="flex justify-between items-center">
-                  <Lightbulb className="text-yellow-400 w-16 h-16" />
-                  <span className="bg-white text-black px-6 py-2 rounded-full font-black text-sm uppercase border-2 border-black">LOCKED</span>
-                </div>
-                <div>
-                  <p className="font-black uppercase text-3xl text-white">Profit Estimator</p>
-                  <p className="text-white font-bold text-base uppercase opacity-70 italic mt-2 text-left">Forecasting Revenue...</p>
-                </div>
+              <span className="bg-white text-black px-3 py-1 rounded font-black text-[10px]">LOCKED</span>
+            </div>
+            
+            <div className="p-6 bg-black rounded-[30px] border-4 border-white flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <Lightbulb className="text-yellow-400 w-10 h-10" />
+                <span className="font-black text-lg">PROFIT TOOL</span>
               </div>
+              <span className="bg-white text-black px-3 py-1 rounded font-black text-[10px]">LOCKED</span>
             </div>
 
             {/* THE PAYWALL */}
-            <div className="bg-yellow-400 p-2 rounded-[60px] mt-16 shadow-[0_0_80px_rgba(250,204,21,0.4)]">
-              <div className="bg-black rounded-[54px] p-12 text-center border-4 border-white">
-                <h3 className="text-5xl font-black mb-6 text-white italic uppercase tracking-tighter">UNLOCK THE<br/>BLUEPRINT</h3>
-                <p className="text-white mb-12 font-black text-2xl italic underline decoration-yellow-400 decoration-4">Get the full $10k/mo strategy.</p>
-                
-                <a 
-                  href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02"
-                  className="block w-full bg-white text-black py-10 rounded-full font-black text-4xl uppercase hover:bg-yellow-400 transition-all text-center no-underline border-8 border-black"
-                >
-                  PAY NOW
-                </a>
-                
-                <div className="mt-10 flex items-center justify-center gap-4 text-white font-black text-lg uppercase tracking-widest">
-                  <ShieldCheck className="w-8 h-8 text-yellow-400" /> SECURE STRIPE
-                </div>
+            <div className="bg-yellow-400 p-6 rounded-[40px] border-4 border-white text-center mt-10">
+              <h3 className="text-3xl font-black mb-2 text-black italic leading-none text-center uppercase">UNLOCK NOW</h3>
+              <p className="text-black font-black text-xs mb-6 underline">GET THE $10K/MO BLUEPRINT</p>
+              <a href="https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02" 
+                 className="block w-full bg-black text-white py-6 rounded-full font-black text-2xl border-4 border-white text-center no-underline">
+                PAY NOW
+              </a>
+              <div className="mt-4 flex items-center justify-center gap-2 text-black font-black text-[10px]">
+                <ShieldCheck className="w-4 h-4" /> SECURE STRIPE
               </div>
             </div>
 
-            {/* START OVER BUTTON */}
-            <button 
-              onClick={() => setStep(1)} 
-              className="w-full text-center text-white text-lg font-black uppercase mt-20 py-8 border-8 border-white rounded-full bg-black hover:bg-white hover:text-black transition-all shadow-[8px_8px_0px_white]"
-            >
-              ← RESET SYSTEM
-            </button>
+            <button onClick={() => setStep(1)} className="w-full text-center text-white text-xs font-black mt-10 opacity-50">← RESET SYSTEM</button>
           </div>
         )}
       </div>
     </div>
   );
-}
-
+              }
+              
