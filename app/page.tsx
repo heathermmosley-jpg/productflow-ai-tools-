@@ -51,7 +51,8 @@ export default function App() {
           
           {step === 1 && (
             <div style={{ textAlign: 'center' }}>
-              <h2 style={{ fontSize: '18vw', fontWeight: '900', fontStyle: 'italic', color: '#facc15', margin: '0', lineHeight: '0.8', textTransform: 'uppercase', WebkitTextStroke: '2px white' }}>LOADED.</h2>
+              {/* CLEANED UP 'LOADED' TEXT */}
+              <h2 style={{ fontSize: '18vw', fontWeight: '900', fontStyle: 'italic', color: '#facc15', margin: '0', lineHeight: '0.8', textTransform: 'uppercase' }}>LOADED.</h2>
               <button onClick={() => setStep(2)} style={{ marginTop: '40px', backgroundColor: 'white', color: 'black', padding: '35px 80px', borderRadius: '0', fontSize: '32px', fontWeight: '900', border: 'none', cursor: 'pointer', textTransform: 'uppercase', boxShadow: '15px 15px 0 #facc15' }}>
                 IDENTIFY NICHE
               </button>
@@ -91,8 +92,7 @@ export default function App() {
                       borderRadius: '12px', 
                       textAlign: 'center', 
                       cursor: 'pointer',
-                      boxShadow: '0 8px 0 rgba(255,255,255,0.1)',
-                      transition: 'transform 0.1s'
+                      boxShadow: '0 8px 0 rgba(255,255,255,0.1)'
                     }}
                   >
                     <p style={{ fontWeight: '900', fontStyle: 'italic', margin: 0, color: 'white', fontSize: '20px', textShadow: '2px 2px 0 black' }}>{name}</p>
@@ -105,7 +105,7 @@ export default function App() {
 
           {step === 4 && (
             <div style={{ textAlign: 'center', backgroundColor: '#111', padding: '80px 20px', border: '10px solid #facc15' }}>
-              <h3 style={{ fontSize: '10vw', fontWeight: '900', fontStyle: 'italic', margin: '0 0 20px 0', lineHeight: '0.8', WebkitTextStroke: '1px white' }}>LOCKED &<br/>READY</h3>
+              <h3 style={{ fontSize: '10vw', fontWeight: '900', fontStyle: 'italic', margin: '0 0 20px 0', lineHeight: '0.8' }}>LOCKED &<br/>READY</h3>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
                 <button onClick={() => handleAction(DIRECT_STRATEGY, 5)} style={{ backgroundColor: '#facc15', color: 'black', padding: '30px 60px', fontSize: '28px', fontWeight: '900', border: '6px solid white', cursor: 'pointer', boxShadow: '10px 10px 0 white' }}>BUY NOW</button>
                 <button onClick={() => setStep(3)} style={{ backgroundColor: 'black', color: 'white', padding: '30px 60px', fontSize: '28px', fontWeight: '900', border: '4px solid white', cursor: 'pointer' }}>BACK</button>
@@ -137,5 +137,5 @@ export default function App() {
       </div>
     </div>
   );
-                     }
-                
+                        }
+          
