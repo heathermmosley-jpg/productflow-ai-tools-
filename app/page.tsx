@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles, Search, ShoppingBag, ArrowLeft, Zap, LayoutGrid, Wrench, BarChart3, Target, Smartphone, Globe, Code, Brain, Flame, HeartPulse, Rocket } from "lucide-react";
+import { Sparkles, Search, ShoppingBag, ArrowLeft, Zap, LayoutGrid, Wrench, BarChart3, Target, Smartphone, Globe, Code, Brain, Flame, HeartPulse, Rocket, CheckCircle2 } from "lucide-react";
 
 export default function App() {
   const [step, setStep] = useState(1);
@@ -31,7 +31,7 @@ export default function App() {
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-4">
       <div className="w-full max-w-6xl border-x-8 border-white min-h-[90vh] flex flex-col p-6 md:p-12 bg-zinc-950 shadow-2xl relative">
         
-        {/* HEADER */}
+        {/* HEADER - FIXED ICONS */}
         <div className="flex justify-between items-center py-6 border-b-4 border-white mb-8 sticky top-0 bg-zinc-950 z-50">
           <div className="flex items-center gap-2">
             <Sparkles className="text-yellow-400 w-8 h-8" />
@@ -80,7 +80,7 @@ export default function App() {
                   <div key={i} onClick={() => { setSelectedTool(tool); setStep(4); }} className="p-8 bg-zinc-900 border-4 border-white/10 rounded-[35px] hover:border-white hover:bg-black cursor-pointer transition-all group">
                     <tool.icon className="w-10 h-10 text-yellow-400 mb-4 group-hover:rotate-12 transition-transform" />
                     <p className="font-black text-xl italic leading-none">{tool.name}</p>
-                    <p className="text-[10px] font-bold opacity-30 mt-2 uppercase">READY FOR {niche || 'ACTION'}</p>
+                    <p className="text-[10px] font-bold opacity-30 mt-2 uppercase">SECURE ACCESS</p>
                   </div>
                 ))}
               </div>
@@ -115,10 +115,13 @@ export default function App() {
         </div>
 
         <div className="mt-8 pt-8 border-t-4 border-white/5 flex justify-between items-center opacity-20 font-black italic text-sm md:text-xl uppercase tracking-widest">
-          <span>SECURE LEGACY BRIDGE</span>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-5 h-5" /> CONNECTION SECURE
+          </div>
           <span>LEGACY PRO VAULT // 2026</span>
         </div>
       </div>
     </div>
   );
-     }
+                  }
+                  
