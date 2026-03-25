@@ -26,4 +26,24 @@ body {
 section {
   width: 100%;
 }
+/* Add this to the bottom of your existing globals.css */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #333; border: 2px solid #000; }
+::-webkit-scrollbar-thumb:hover { background: #facc15; }
+
+input:focus, textarea:focus { 
+  outline: none; 
+  border-color: #facc15 !important; 
+}
+
 
