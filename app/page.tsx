@@ -1,141 +1,116 @@
 "use client";
-
 import { useState } from "react";
 
-export default function App() {
-  const [step, setStep] = useState(1);
-  const [niche, setNiche] = useState("");
+export default function ProductFlowAI() {
+  const [activeTab, setActiveTab] = useState("HOME");
+  const [padInput, setPadInput] = useState("");
+  const [padResult, setPadResult] = useState<{niche: string, angle: string} | null>(null);
+  const [padError, setPadError] = useState("");
+  const [coachInput, setCoachInput] = useState("");
+  const [coachResult, setCoachResult] = useState("");
+  const [coachError, setCoachError] = useState("");
+  const [requestData, setRequestData] = useState({ name: "", email: "", outcome: "" });
+  const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const G_BASE = "https://legacyprovault.gumroad.com";
+  const navItems = ["HOME", "THE PAD", "FREE TOOLS", "STORE", "AI COACH", "REQUEST"];
 
-  const VAULT_URL = "https://legacyprovault.gumroad.com";
-  const SUBSCRIBE_URL = "https://legacyprovault.gumroad.com/follow";
-  const DIRECT_STRATEGY = "https://legacyprovault.gumroad.com/l/Irresist";
-
-  const arsenal = [
-    "GAP FINDER", "PROFIT MATH", "SEO SCANNER", "NICHE HUNTER", "FOCUS ENGINE", 
-    "ADRENALINE X", "VITALITY SCAN", "SCALE BOT", "TRAFFIC MOVER", "HOOK MASTER",
-    "REVENUE RADAR", "OFFER BUILDER", "COPY GENIUS", "LEAD MAGNET", "FUNNEL FIXER",
-    "AD SPEND ROI", "CONTENT GRID", "SOCIAL SURGE", "EMAIL ARCHITECT", "CLIENT CLOSER",
-    "PIPELINE PRO", "BRAND SHIELD", "MARKET MAPPER", "VIRAL VELOCITY", "WEALTH WIDGET",
-    "SYSTEMS SYNC", "GROWTH GEAR", "LEGACY LOOM", "EMPIRE EDGE", "STRATEGY STREAM",
-    "VALUATION VAULT", "EXIT ENGINE", "CASHFLOW CODE", "MARGIN MAKER", "RISK RADAR",
-    "MINDSET MATRIX", "HABIT HUB", "PEAK PERFORMER", "FLOW STATE", "VISION VENTURE",
-    "IMPACT INDEX", "PRODUCT FLOW AI"
-  ];
-
-  const handleAction = (url: string, nextStep?: number) => {
-    window.open(url, "_blank");
-    if (nextStep) setStep(nextStep);
-  };
+  const ToolCard = ({ title, desc, tag, url = "", isComingSoon = false }: any) => (
+    <div style={{ backgroundColor: '#111', border: '3px solid white', padding: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <div>
+        <div style={{ color: '#facc15', fontSize: '11px', fontWeight: '900', marginBottom: '10px', textTransform: 'uppercase' }}>{tag}</div>
+        <h3 style={{ fontSize: '20px', fontWeight: '900', margin: '0 0 10px 0' }}>{title}</h3>
+        <p style={{ fontSize: '13px', color: '#aaa' }}>{desc}</p>
+      </div>
+      <button onClick={() => !isComingSoon && window.open(url, "_blank")} disabled={isComingSoon} style={{ marginTop: '20px', backgroundColor: isComingSoon ? '#333' : 'white', color: isComingSoon ? '#777' : 'black', padding: '12px', fontWeight: '900', border: 'none', cursor: isComingSoon ? 'not-allowed' : 'pointer' }}>
+        {isComingSoon ? "COMING SOON" : "ACCESS TOOL"}
+      </button>
+    </div>
+  );
 
   return (
-    <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', padding: '10px' }}>
-      <div style={{ width: '100%', maxWidth: '1200px', border: '10px solid white', minHeight: '95vh', display: 'flex', flexDirection: 'column', padding: '20px', backgroundColor: '#050505', boxShadow: '0 0 100px rgba(255, 255, 255, 0.1)', position: 'relative' }}>
-        
-        {/* HEADER */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px', borderBottom: '8px solid white', marginBottom: '25px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '18px', height: '18px', backgroundColor: '#facc15', border: '3px solid white' }}></div>
-            <h1 style={{ fontSize: '32px', fontWeight: '900', fontStyle: 'italic', margin: 0, letterSpacing: '-2px' }}>THE PAD</h1>
+    <div style={{ backgroundColor: 'black', color: 'white', minHeight: '100vh', padding: '10px' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', border: '8px solid white', minHeight: '95vh', display: 'flex', flexDirection: 'column', backgroundColor: '#050505' }}>
+        <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '15px 20px', borderBottom: '6px solid white', flexWrap: 'wrap', gap: '15px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => setActiveTab("HOME")}>
+            <div style={{ width: '18px', height: '18px', backgroundColor: '#facc15', border: '2px solid white' }}></div>
+            <span style={{ fontWeight: '900', fontSize: '18px' }}>PRODUCTFLOW AI</span>
           </div>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <button onClick={() => handleAction(SUBSCRIBE_URL)} style={{ backgroundColor: 'white', color: 'black', padding: '12px 25px', borderRadius: '4px', fontWeight: '900', border: 'none', cursor: 'pointer', fontSize: '12px', textTransform: 'uppercase' }}>
-              SUBSCRIBE
-            </button>
-            <button onClick={() => handleAction(VAULT_URL)} style={{ backgroundColor: '#facc15', color: 'black', padding: '12px 25px', borderRadius: '4px', fontWeight: '900', border: '4px solid white', cursor: 'pointer', fontSize: '12px', textTransform: 'uppercase' }}>
-              VAULT
-            </button>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+            {navItems.map((item) => (
+              <button key={item} onClick={() => setActiveTab(item)} style={{ background: activeTab === item ? '#facc15' : 'none', color: activeTab === item ? 'black' : 'white', fontWeight: '900', fontSize: '11px', padding: '6px 12px', border: activeTab === item ? '2px solid white' : 'none', cursor: 'pointer' }}>{item}</button>
+            ))}
           </div>
-        </div>
-
-        <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 10px' }}>
-          
-          {step === 1 && (
-            <div style={{ textAlign: 'center' }}>
-              {/* CLEANED UP 'LOADED' TEXT */}
-              <h2 style={{ fontSize: '18vw', fontWeight: '900', fontStyle: 'italic', color: '#facc15', margin: '0', lineHeight: '0.8', textTransform: 'uppercase' }}>LOADED.</h2>
-              <button onClick={() => setStep(2)} style={{ marginTop: '40px', backgroundColor: 'white', color: 'black', padding: '35px 80px', borderRadius: '0', fontSize: '32px', fontWeight: '900', border: 'none', cursor: 'pointer', textTransform: 'uppercase', boxShadow: '15px 15px 0 #facc15' }}>
-                IDENTIFY NICHE
-              </button>
-            </div>
-          )}
-
-          {step === 2 && (
-            <div style={{ textAlign: 'center' }}>
-              <h2 style={{ fontSize: '60px', fontWeight: '900', fontStyle: 'italic', marginBottom: '10px' }}>TARGET <span style={{ color: '#facc15' }}>MARKET</span></h2>
-              <input 
-                type="text" placeholder="E.G. REAL ESTATE..." 
-                style={{ width: '100%', maxWidth: '700px', backgroundColor: '#111', border: '6px solid white', padding: '30px', color: 'white', fontSize: '28px', textAlign: 'center', fontWeight: '900', marginBottom: '20px' }}
-                value={niche} onChange={(e) => setNiche(e.target.value)}
-              />
-              <button onClick={() => setStep(3)} style={{ display: 'block', margin: '0 auto', width: '100%', maxWidth: '700px', backgroundColor: '#facc15', color: 'black', padding: '25px', fontWeight: '900', fontSize: '24px', border: '4px solid white', cursor: 'pointer', textTransform: 'uppercase' }}>
-                GENERATE SOLUTIONS
-              </button>
-            </div>
-          )}
-
-          {step === 3 && (
-            <div>
-              <div style={{ borderBottom: '6px solid #facc15', paddingBottom: '15px', marginBottom: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h2 style={{ fontSize: '30px', fontWeight: '900', fontStyle: 'italic', margin: 0 }}>THE ARSENAL <span style={{color: '#facc15'}}>(42)</span></h2>
-                <button onClick={() => setStep(2)} style={{ color: 'white', fontWeight: '900', background: 'black', border: '4px solid white', padding: '8px 15px', cursor: 'pointer', fontSize: '12px' }}>RESET</button>
+        </nav>
+        <main style={{ flexGrow: 1, padding: '30px 20px' }}>
+          {activeTab === "HOME" && (
+            <div className="fade-in" style={{ textAlign: 'center' }}>
+              <h1 style={{ fontSize: 'clamp(35px, 7vw, 75px)', fontWeight: '900', lineHeight: '0.85' }}>FIND THE PROBLEM.<br/><span style={{ color: '#facc15' }}>GET THE TOOL.</span></h1>
+              <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', margin: '30px 0' }}>
+                <button onClick={() => setActiveTab("THE PAD")} style={{ backgroundColor: 'white', color: 'black', padding: '18px 30px', fontWeight: '900', cursor: 'pointer' }}>START WITH THE PAD</button>
+                <button onClick={() => setActiveTab("STORE")} style={{ backgroundColor: 'transparent', color: 'white', padding: '18px 30px', border: '3px solid white', cursor: 'pointer' }}>SHOP TRANSFORMATIONS</button>
               </div>
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '20px', maxHeight: '55vh', overflowY: 'auto', padding: '10px' }}>
-                {arsenal.map((name) => (
-                  <button 
-                    key={name} 
-                    onClick={() => setStep(4)} 
-                    style={{ 
-                      padding: '40px 20px', 
-                      backgroundColor: '#111', 
-                      border: '4px solid white', 
-                      borderRadius: '12px', 
-                      textAlign: 'center', 
-                      cursor: 'pointer',
-                      boxShadow: '0 8px 0 rgba(255,255,255,0.1)'
-                    }}
-                  >
-                    <p style={{ fontWeight: '900', fontStyle: 'italic', margin: 0, color: 'white', fontSize: '20px', textShadow: '2px 2px 0 black' }}>{name}</p>
-                    <div style={{ marginTop: '15px', backgroundColor: '#facc15', color: 'black', fontSize: '11px', fontWeight: '900', display: 'inline-block', padding: '5px 12px', border: '2px solid white' }}>VIEW TOOL</div>
-                  </button>
-                ))}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+                <div onClick={() => setActiveTab("THE PAD")} style={{ border: '4px solid white', padding: '30px', backgroundColor: '#111', cursor: 'pointer' }}><h2>THE PAD</h2><p>Identify niche/pain points.</p></div>
+                <div onClick={() => setActiveTab("STORE")} style={{ border: '4px solid #facc15', padding: '30px', backgroundColor: '#111', cursor: 'pointer' }}><h2>STORE</h2><p>Ready-made systems.</p></div>
+                <div onClick={() => setActiveTab("REQUEST")} style={{ border: '4px solid white', padding: '30px', backgroundColor: '#111', cursor: 'pointer' }}><h2>CUSTOM</h2><p>Tailored builds.</p></div>
               </div>
             </div>
           )}
-
-          {step === 4 && (
-            <div style={{ textAlign: 'center', backgroundColor: '#111', padding: '80px 20px', border: '10px solid #facc15' }}>
-              <h3 style={{ fontSize: '10vw', fontWeight: '900', fontStyle: 'italic', margin: '0 0 20px 0', lineHeight: '0.8' }}>LOCKED &<br/>READY</h3>
-              <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
-                <button onClick={() => handleAction(DIRECT_STRATEGY, 5)} style={{ backgroundColor: '#facc15', color: 'black', padding: '30px 60px', fontSize: '28px', fontWeight: '900', border: '6px solid white', cursor: 'pointer', boxShadow: '10px 10px 0 white' }}>BUY NOW</button>
-                <button onClick={() => setStep(3)} style={{ backgroundColor: 'black', color: 'white', padding: '30px 60px', fontSize: '28px', fontWeight: '900', border: '4px solid white', cursor: 'pointer' }}>BACK</button>
+          {activeTab === "THE PAD" && (
+            <div className="fade-in" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
+              <h2 style={{ fontSize: '45px', color: '#facc15', fontWeight: '900' }}>THE PAD</h2>
+              <div style={{ textAlign: 'left', backgroundColor: '#111', border: '4px solid white', padding: '30px' }}>
+                <input value={padInput} onChange={(e) => setPadInput(e.target.value)} placeholder="ENTER NICHE..." style={{ width: '100%', padding: '20px', background: 'black', border: '2px solid white', color: 'white' }} />
+                {padError && <p style={{ color: 'red', fontWeight: '900' }}>{padError}</p>}
+                <button onClick={() => padInput.trim() ? setPadResult({niche: padInput, angle: "ELITE SYSTEM"}) : setPadError("INPUT REQUIRED")} style={{ width: '100%', padding: '20px', background: '#facc15', border: 'none', marginTop: '10px', fontWeight: '900', cursor: 'pointer' }}>GENERATE</button>
               </div>
+              {padResult && <div style={{ marginTop: '20px', border: '4px solid #facc15', padding: '20px' }}><h3>NICHE: {padResult.niche.toUpperCase()}</h3><p>ANGLE: {padResult.angle}</p></div>}
             </div>
           )}
-
-          {step === 5 && (
-            <div style={{ textAlign: 'center' }}>
-              <h2 style={{ fontSize: '80px', fontWeight: '900', fontStyle: 'italic', margin: '0 0 10px 0', color: '#facc15' }}>SUCCESS.</h2>
-              <div style={{ backgroundColor: 'white', color: 'black', padding: '40px', border: '8px solid #facc15', marginBottom: '40px', maxWidth: '700px', margin: '0 auto 40px auto' }}>
-                <p style={{ fontWeight: '900', fontSize: '22px' }}>JOIN THE INNER CIRCLE</p>
-                <p style={{ fontWeight: '700', fontSize: '16px', marginBottom: '25px' }}>NEVER MISS A NEW REVENUE TOOL.</p>
-                <button onClick={() => handleAction(SUBSCRIBE_URL)} style={{ backgroundColor: 'black', color: 'white', padding: '20px 50px', fontWeight: '900', border: 'none', cursor: 'pointer', fontSize: '18px' }}>
-                  SUBSCRIBE TO VAULT
-                </button>
-              </div>
-              <button onClick={() => setStep(3)} style={{ backgroundColor: 'transparent', color: 'white', padding: '25px 50px', fontSize: '24px', fontWeight: '900', border: '6px solid white', cursor: 'pointer' }}>
-                CONTINUE SHOPPING
-              </button>
+          {activeTab === "FREE TOOLS" && (
+            <div className="fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+              <ToolCard tag="NICHE" title="NICHE FINDER" desc="Identify high-traffic sub-sectors." isComingSoon={true} />
+              <ToolCard tag="MARKETING" title="OFFER ANGLE" desc="Pitch your service 5 unique ways." isComingSoon={true} />
+              <ToolCard tag="PERFORMANCE" title="FOCUS SCORE" desc="Audit your productivity grade." isComingSoon={true} />
+              <ToolCard tag="ROUTINE" title="DAILY RESET" desc="2-minute morning protocol." isComingSoon={true} />
             </div>
           )}
-        </div>
-
-        {/* FOOTER */}
-        <div style={{ marginTop: '20px', textAlign: 'center', opacity: 0.5, fontSize: '12px', fontWeight: '900', letterSpacing: '5px' }}>
-          SYSTEM ONLINE // LEGACY PRO 2026
-        </div>
+          {activeTab === "STORE" && (
+            <div className="fade-in" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
+              <ToolCard url={`${G_BASE}/l/mindsetmatrix`} tag="MINDSET" title="MINDSET MATRIX" desc="Cognitive Overhaul System." />
+              <ToolCard url={`${G_BASE}/l/flowstate`} tag="FOCUS" title="FLOW STATE" desc="Execution Manual." />
+              <ToolCard url={`${G_BASE}/l/wealthwidget`} tag="FINANCE" title="WEALTH WIDGET" desc="Budgeting Blueprint." />
+              <ToolCard url={`${G_BASE}/l/cashflowcode`} tag="DEBT" title="CASHFLOW CODE" desc="Debt Liberation Protocol." />
+            </div>
+          )}
+          {activeTab === "AI COACH" && (
+            <div className="fade-in" style={{ maxWidth: '700px', margin: '0 auto', border: '4px solid #facc15', padding: '30px', backgroundColor: '#111' }}>
+              <h2>AI SOLUTION ROUTER</h2>
+              <textarea value={coachInput} onChange={(e) => setCoachInput(e.target.value)} placeholder="WHAT ARE YOU STRUGGLING WITH?" style={{ width: '100%', height: '120px', background: 'black', border: '2px solid white', color: 'white', padding: '15px' }} />
+              {coachError && <p style={{ color: 'red' }}>{coachError}</p>}
+              <button onClick={() => coachInput.trim() ? setCoachResult("START WITH THE FLOW STATE MODULE.") : setCoachError("DESCRIBE YOUR BOTTLENECK")} style={{ width: '100%', padding: '15px', background: '#facc15', fontWeight: '900', border: 'none', cursor: 'pointer', marginTop: '10px' }}>GET RECOMMENDATION</button>
+              {coachResult && <p style={{ marginTop: '20px', border: '2px solid white', padding: '15px' }}>{coachResult}</p>}
+            </div>
+          )}
+          {activeTab === "REQUEST" && (
+            <div className="fade-in" style={{ maxWidth: '600px', margin: '0 auto' }}>
+              {!requestSubmitted ? (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                  <input placeholder="NAME" onChange={(e) => setRequestData({...requestData, name: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white' }} />
+                  <input placeholder="EMAIL" onChange={(e) => setRequestData({...requestData, email: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white' }} />
+                  <textarea placeholder="OUTCOME" onChange={(e) => setRequestData({...requestData, outcome: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white', height: '100px' }} />
+                  <button onClick={() => requestData.name ? setRequestSubmitted(true) : alert("COMPLETE FIELDS")} style={{ padding: '20px', background: 'white', color: 'black', fontWeight: '900', cursor: 'pointer' }}>SUBMIT REQUEST</button>
+                </div>
+              ) : (
+                <div style={{ border: '6px solid #facc15', padding: '40px', textAlign: 'center' }}><h2>SENT</h2><p>Reviewing outcome parameters.</p><button onClick={() => setRequestSubmitted(false)} style={{ marginTop: '20px', padding: '10px 20px', cursor: 'pointer' }}>NEW REQUEST</button></div>
+              )}
+            </div>
+          )}
+        </main>
+        <footer style={{ padding: '25px', borderTop: '6px solid white', textAlign: 'center' }}>
+          <div style={{ fontSize: '10px', color: '#444', letterSpacing: '5px' }}>SYSTEM ONLINE // 2026</div>
+        </footer>
       </div>
     </div>
   );
-                    }
-                  
+}
