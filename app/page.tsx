@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProductFlowAI() {
   // --- NAVIGATION STATE ---
@@ -15,19 +15,17 @@ export default function ProductFlowAI() {
   const [followUpInput, setFollowUpInput] = useState("");
   const [followUpResponse, setFollowUpResponse] = useState("");
   
-  // --- REQUEST STATE ---
+  // --- REQUEST & REDIRECT STATE ---
   const [requestData, setRequestData] = useState({ name: "", email: "", outcome: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
-  // --- NAV HELPERS ---
-  const handleTabChange = (newTab: string) => {
-    setPreviousTab(activeTab);
-    setActiveTab(newTab);
-  };
+  // --- STRIPE & FORMSPREE CONFIG ---
+  const STRIPE_BUILD_DEPOSIT = "https://buy.stripe.com/4gMbJ2cq85pl9oKfKobwk02";
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvzvozjo";
 
-  const goBack = () => setActiveTab(previousTab);
-
+  // --- PRODUCT LINKS ---
   const PRODUCTS = {
     CONSISTENCY: "https://legacyprovault.gumroad.com/l/Conss",
     STEPS: "https://legacyprovault.gumroad.com/l/Steps",
@@ -41,17 +39,35 @@ export default function ProductFlowAI() {
     RESET: "https://legacyprovault.gumroad.com/l/Reset"
   };
 
+  // --- COUNTDOWN EFFECT ---
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (requestSubmitted && countdown > 0) {
+      timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    } else if (requestSubmitted && countdown === 0) {
+      window.open(STRIPE_BUILD_DEPOSIT, "_blank");
+    }
+    return () => clearTimeout(timer);
+  }, [requestSubmitted, countdown]);
+
+  // --- NAV HELPERS ---
+  const handleTabChange = (newTab: string) => {
+    setPreviousTab(activeTab);
+    setActiveTab(newTab);
+  };
+  const goBack = () => setActiveTab(previousTab);
+
   // --- FORM SUBMISSION ENGINE ---
   const handleRequestSubmit = async () => {
-    if (!requestData.name || !requestData.outcome) {
-      alert("Please fill in your name and the required outcome.");
+    if (!requestData.name || !requestData.email || !requestData.outcome) {
+      alert("System requires Name, Email, and Outcome to proceed.");
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("https://formspree.io/f/xvzvozjo", {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
@@ -60,16 +76,15 @@ export default function ProductFlowAI() {
       if (response.ok) {
         setRequestSubmitted(true);
       } else {
-        alert("System error. Please try again or contact support.");
+        alert("Transmission error. Please try again.");
       }
     } catch (error) {
-      alert("Connection error. Check your internet and try again.");
+      alert("Connection interrupted.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // --- COMPONENTS ---
   const BackButton = () => (
     <button onClick={goBack} style={{ marginBottom: '20px', padding: '8px 15px', backgroundColor: 'transparent', color: '#facc15', border: '2px solid #facc15', fontWeight: '900', fontSize: '11px', cursor: 'pointer', textTransform: 'uppercase' }}>
       ← BACK
@@ -218,7 +233,7 @@ export default function ProductFlowAI() {
               {!requestSubmitted ? (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                   <h2 style={{ fontSize: '32px', fontWeight: '900' }}>REQUEST <span style={{ color: '#facc15' }}>BUILD</span></h2>
-                  <p style={{ fontSize: '13px', color: '#888' }}>Our engine will analyze this and contact you with a build quote.</p>
+                  <p style={{ fontSize: '13px', color: '#888' }}>Capture data & secure your deposit. System will auto-redirect to secure Stripe portal.</p>
                   <input placeholder="NAME" value={requestData.name} onChange={(e) => setRequestData({...requestData, name: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white' }} />
                   <input placeholder="EMAIL ADDRESS" value={requestData.email} onChange={(e) => setRequestData({...requestData, email: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white' }} />
                   <textarea placeholder="DESCRIBE THE OUTCOME YOU NEED..." value={requestData.outcome} onChange={(e) => setRequestData({...requestData, outcome: e.target.value})} style={{ padding: '15px', background: '#111', border: '2px solid white', color: 'white', height: '120px' }} />
@@ -227,14 +242,15 @@ export default function ProductFlowAI() {
                     disabled={isSubmitting}
                     style={{ padding: '20px', background: isSubmitting ? '#333' : 'white', color: isSubmitting ? '#777' : 'black', fontWeight: '900', cursor: isSubmitting ? 'default' : 'pointer' }}
                   >
-                    {isSubmitting ? "TRANSMITTING..." : "SUBMIT REQUEST"}
+                    {isSubmitting ? "TRANSMITTING DATA..." : "SUBMIT & PAY DEPOSIT"}
                   </button>
                 </div>
               ) : (
                 <div style={{ border: '4px solid #facc15', padding: '40px', textAlign: 'center', backgroundColor: '#111' }}>
                   <h2 style={{ color: '#facc15' }}>TRANSMISSION RECEIVED</h2>
-                  <p style={{ margin: '20px 0', fontSize: '14px' }}>Your request has been sent to the build engine. Check your email for next steps.</p>
-                  <button onClick={() => setRequestSubmitted(false)} style={{ padding: '10px 20px', background: 'white', color: 'black', border: 'none', fontWeight: '900', cursor: 'pointer' }}>NEW REQUEST</button>
+                  <p style={{ margin: '20px 0', fontSize: '14px' }}>Redirecting to secure payment portal in...</p>
+                  <div style={{ fontSize: '60px', fontWeight: '900', color: 'white', margin: '20px 0' }}>{countdown}</div>
+                  <p style={{ fontSize: '11px', color: '#555' }}>If portal doesn't open, <a href={STRIPE_BUILD_DEPOSIT} target="_blank" style={{ color: '#facc15' }}>click here</a>.</p>
                 </div>
               )}
             </div>
@@ -256,5 +272,5 @@ export default function ProductFlowAI() {
       </div>
     </div>
   );
-        }
-          
+              }
+                          
